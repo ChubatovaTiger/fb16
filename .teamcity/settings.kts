@@ -29,6 +29,7 @@ project {
 
     buildType(Build1)
     buildType(Build2)
+buildType(Build3)
 }
 
 object Build1 : BuildType({
@@ -49,11 +50,29 @@ object Build1 : BuildType({
         snapshot(Build2) {
             reuseBuilds = ReuseBuilds.NO
         }
+        snapshot(Build3) {
+            reuseBuilds = ReuseBuilds.NO
+        }
     }
 })
 
 object Build2 : BuildType({
     name = "build2"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
+
+    steps {
+        script {
+            id = "simpleRunner"
+            scriptContent = "ls"
+        }
+    }
+})
+
+object Build3 : BuildType({
+    name = "build3"
 
     vcs {
         root(DslContext.settingsRoot)
